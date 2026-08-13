@@ -16,7 +16,7 @@ public class FastBreakMixin {
     @Shadow private int destroyDelay;
     @Shadow private float destroyProgress;
 
-    @Inject(method = "continueDestroyBlock", at = @At("HEAD"))
+    @Inject(method = "continueDestroyBlock", at = @At("HEAD"), require = 0)
     private void onContinueDestroyBlock(BlockPos pos, Direction direction, CallbackInfoReturnable<Boolean> cir) {
         this.destroyDelay = 0;
 

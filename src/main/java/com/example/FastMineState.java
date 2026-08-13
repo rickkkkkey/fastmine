@@ -1,7 +1,7 @@
-package com.example.fastbreak;
+package com.example;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 
 public class FastMineState {
     public static float speedMultiplier = 1.2f;
@@ -17,17 +17,15 @@ public class FastMineState {
                     
                     speedMultiplier = newSpeed;
                     
-                    if (MinecraftClient.getInstance().player != null) {
-                        MinecraftClient.getInstance().player.sendMessage(
-                            Text.literal("§a[FastMine] Speed multiplier set to: §f" + speedMultiplier + "x"), 
-                            false
+                    if (Minecraft.getInstance().player != null) {
+                        Minecraft.getInstance().player.sendSystemMessage(
+                            Component.literal("§a[FastMine] Speed multiplier set to: §f" + speedMultiplier + "x")
                         );
                     }
                 } catch (NumberFormatException e) {
-                    if (MinecraftClient.getInstance().player != null) {
-                        MinecraftClient.getInstance().player.sendMessage(
-                            Text.literal("§c[FastMine] Invalid speed! Example usage: .fastmine 1.2"), 
-                            false
+                    if (Minecraft.getInstance().player != null) {
+                        Minecraft.getInstance().player.sendSystemMessage(
+                            Component.literal("§c[FastMine] Invalid speed! Example usage: .fastmine 1.2")
                         );
                     }
                 }

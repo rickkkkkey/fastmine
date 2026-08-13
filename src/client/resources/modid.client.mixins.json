@@ -1,14 +1,12 @@
 {
 	"required": true,
 	"package": "com.example.client.mixin",
-	"compatibilityLevel": "JAVA_25",
+	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"ExampleClientMixin"
+		"FastBreakMixin",
+		"ChatMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
 	}
 }

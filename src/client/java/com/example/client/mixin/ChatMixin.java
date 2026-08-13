@@ -10,8 +10,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LocalPlayer.class)
 public class ChatMixin {
 
-    @Inject(method = "chat", at = @At("HEAD"), cancellable = true)
+    // Try injecting into chat/sendChat
+    @Inject(method = "chat(Ljava/lang/String;)V", at = @At("HEAD"), cancellable = true, require = 0)
     private void onChat(String message, CallbackInfo ci) {
+        if (FastMineState.handleChatMessage(message)) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "sendChat(Ljava/lang/String;)V", at = @At("HEAD"), cancellable = true, require = 0)
+    private void onSendChat(String message, CallbackInfo ci) {
         if (FastMineState.handleChatMessage(message)) {
             ci.cancel();
         }

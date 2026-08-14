@@ -1,16 +1,16 @@
 package com.example.mixin;
 
 import com.example.FastMineState;
-import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.network.ClientPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(LocalPlayer.class)
+@Mixin(ClientPlayerEntity.class)
 public class ChatMixin {
 
-    @Inject(method = "chat", at = @At("HEAD"), cancellable = true, require = 0)
+    @Inject(method = "networkSendChatMessage", at = @At("HEAD"), cancellable = true, require = 0)
     private void onChat(String message, CallbackInfo ci) {
         if (FastMineState.handleChatMessage(message)) {
             ci.cancel();

@@ -1,7 +1,7 @@
-package com.example;
+package com.example.client;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 
 public class FastMineState {
     public static float speedMultiplier = 1.0f;
@@ -18,17 +18,15 @@ public class FastMineState {
                 
                 speedMultiplier = val;
                 
-                if (MinecraftClient.getInstance().player != null) {
-                    MinecraftClient.getInstance().player.sendMessage(
-                        Text.literal("§a[FastMine] Speed set to: " + speedMultiplier + "x"),
-                        false
+                if (Minecraft.getInstance().player != null) {
+                    Minecraft.getInstance().player.sendSystemMessage(
+                        Component.literal("§a[FastMine] Speed set to: " + speedMultiplier + "x")
                     );
                 }
             } catch (NumberFormatException e) {
-                if (MinecraftClient.getInstance().player != null) {
-                    MinecraftClient.getInstance().player.sendMessage(
-                        Text.literal("§c[FastMine] Invalid number format! Example: .fastmine 2.5"),
-                        false
+                if (Minecraft.getInstance().player != null) {
+                    Minecraft.getInstance().player.sendSystemMessage(
+                        Component.literal("§c[FastMine] Invalid number format! Example: .fastmine 2.5")
                     );
                 }
             }

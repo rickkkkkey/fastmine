@@ -16,6 +16,7 @@ public class FastBreakMixin {
     @Shadow private int destroyDelay;
     @Shadow private float destroyProgress;
 
+    // require = 0 prevents the game from crashing if Lunar modifies this method
     @Inject(method = "continueDestroyBlock", at = @At("HEAD"), require = 0)
     private void onContinueDestroyBlock(BlockPos pos, Direction direction, CallbackInfoReturnable<Boolean> cir) {
         this.destroyDelay = 0;

@@ -7,9 +7,16 @@ public class FastMineState {
     public static float speedMultiplier = 1.2f;
 
     public static boolean handleChatMessage(String message) {
-        if (message.startsWith(".fastmine ")) {
-            String[] args = message.split(" ");
-            if (args.length > 1) {
+        String trimmed = message.trim();
+        if (trimmed.equals(".fastmine") || trimmed.startsWith(".fastmine ")) {
+            String[] args = trimmed.split("\\s+");
+            if (args.length == 1) {
+                if (Minecraft.getInstance().player != null) {
+                    Minecraft.getInstance().player.sendSystemMessage(
+                        Component.literal("§e[FastMine] Current speed: §f" + speedMultiplier + "x §e(usage: .fastmine 1.2)")
+                    );
+                }
+            } else {
                 try {
                     float newSpeed = Float.parseFloat(args[1]);
                     if (newSpeed < 0.1f) newSpeed = 0.1f;

@@ -3,8 +3,7 @@
 	"package": "com.example.client.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"FastBreakMixin",
-		"ChatMixin"
+		"FastBreakMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

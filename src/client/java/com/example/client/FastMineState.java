@@ -5,9 +5,21 @@ import net.minecraft.network.chat.Component;
 
 public class FastMineState {
     public static float speedMultiplier = 1.2f;
+    public static boolean noFall = true;
 
     public static boolean handleChatMessage(String message) {
         String trimmed = message.trim();
+        if (trimmed.equals(".nofall")) {
+            noFall = !noFall;
+            if (Minecraft.getInstance().player != null) {
+                Minecraft.getInstance().player.sendSystemMessage(
+                    Component.literal(noFall
+                        ? "§a[FastMine] NoFall §fenabled"
+                        : "§c[FastMine] NoFall §fdisabled")
+                );
+            }
+            return true;
+        }
         if (trimmed.equals(".fastmine") || trimmed.startsWith(".fastmine ")) {
             String[] args = trimmed.split("\\s+");
             if (args.length == 1) {

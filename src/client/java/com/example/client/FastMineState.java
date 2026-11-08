@@ -6,6 +6,7 @@ import net.minecraft.network.chat.Component;
 public class FastMineState {
     public static float speedMultiplier = 1.2f;
     public static boolean noFall = true;
+    public static boolean criticals = false;
 
     public static boolean handleChatMessage(String message) {
         String trimmed = message.trim();
@@ -16,6 +17,17 @@ public class FastMineState {
                     Component.literal(noFall
                         ? "§a[FastMine] NoFall §fenabled"
                         : "§c[FastMine] NoFall §fdisabled")
+                );
+            }
+            return true;
+        }
+        if (trimmed.equals(".crit")) {
+            criticals = !criticals;
+            if (Minecraft.getInstance().player != null) {
+                Minecraft.getInstance().player.sendSystemMessage(
+                    Component.literal(criticals
+                        ? "§a[FastMine] Criticals §fenabled"
+                        : "§c[FastMine] Criticals §fdisabled")
                 );
             }
             return true;

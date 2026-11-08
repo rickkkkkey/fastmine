@@ -3,7 +3,19 @@ plugins {
 	id 'maven-publish'
 }
 
-version = project.mod_version
+// Version = <mod_version from gradle.properties>.<number of git commits>,
+// so it goes up automatically with every commit (e.g. 1.0.42).
+def gitCommitCount = {
+	try {
+		def proc = ['git', 'rev-list', '--count', 'HEAD'].execute(null, projectDir)
+		def out = proc.text.trim()
+		proc.waitFor()
+		return proc.exitValue() == 0 && out ? out : '0'
+	} catch (Exception ignored) {
+		return '0'
+	}
+}
+version = "${project.mod_version}.${gitCommitCount()}"
 group = project.maven_group
 
 repositories {

@@ -18,11 +18,11 @@ public class ExampleModClient implements ClientModInitializer {
 
 		ClientTickEvents.END_CLIENT_TICK.register(NoFall::tick);
 
-		// Keybind to open the settings GUI (default Right Shift, changeable in Controls).
+		// Keybind to open the settings GUI (default Page Down, changeable in Controls).
 		guiKey = KeyMappingHelper.registerKeyMapping(new KeyMapping(
 			"key.fastmine.gui",
 			InputConstants.Type.KEYSYM,
-			InputConstants.KEY_RSHIFT,
+			InputConstants.KEY_PAGEDOWN,
 			KeyMapping.Category.MISC
 		));
 

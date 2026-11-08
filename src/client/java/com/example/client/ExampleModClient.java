@@ -12,5 +12,14 @@ public class ExampleModClient implements ClientModInitializer {
 		ClientSendMessageEvents.ALLOW_CHAT.register(message -> !FastMineState.handleChatMessage(message));
 
 		ClientTickEvents.END_CLIENT_TICK.register(NoFall::tick);
+
+		// ".gui" sets a flag; open the screen on the next tick so it isn't
+		// immediately closed by the chat screen that sent the command.
+		ClientTickEvents.END_CLIENT_TICK.register(client -> {
+			if (FastMineState.openGui) {
+				FastMineState.openGui = false;
+				client.setScreen(new FastMineScreen());
+			}
+		});
 	}
 }

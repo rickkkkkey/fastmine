@@ -6,9 +6,14 @@ import net.minecraft.network.chat.Component;
 public class FastMineState {
     public static float speedMultiplier = 1.2f;
     public static boolean noFall = true;
+    public static boolean openGui = false;
 
     public static boolean handleChatMessage(String message) {
         String trimmed = message.trim();
+        if (trimmed.equals(".gui")) {
+            openGui = true;
+            return true;
+        }
         if (trimmed.equals(".nofall")) {
             noFall = !noFall;
             if (Minecraft.getInstance().player != null) {

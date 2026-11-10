@@ -1,0 +1,30 @@
+name: inspect
+on:
+  push:
+    branches: [inspect-26.3]
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          java-version: '25'
+          distribution: 'microsoft'
+      - run: chmod +x ./gradlew
+      - name: fetch minecraft jars
+        run: ./gradlew compileJava --continue || true
+      - name: dump api signatures
+        run: |
+          JAR=""
+          for j in $(find ~/.gradle .gradle -name '*.jar' 2>/dev/null); do
+            if unzip -l "$j" 2>/dev/null | grep -q 'net/minecraft/client/KeyMapping.class'; then JAR="$j"; echo "MC JAR: $j"; break; fi
+          done
+          [ -z "$JAR" ] && { echo "no jar found"; exit 0; }
+          for c in 'com.mojang.blaze3d.platform.InputConstants' 'com.mojang.blaze3d.platform.InputConstants$Type' 'net.minecraft.client.KeyMapping' 'net.minecraft.client.KeyMapping$Category'; do
+            echo "===== $c"; javap -public -cp "$JAR" "$c" | grep -iE "class|enum|interface|KeyMapping\(|KEY_PAGE|KEY_RSHIFT|MISC|KEYSYM|MOUSE|SCANCODE|static .*(Type|Category)|register|Category" | head -40
+          done
+          echo "===== Minecraft (screen/gui/setScreen)"
+          javap -public -cp "$JAR" net.minecraft.client.Minecraft | grep -iE "screen|gui|getInstance"
+          echo "===== Gui"
+          javap -public -cp "$JAR" net.minecraft.client.gui.Gui | grep -iE "screen"

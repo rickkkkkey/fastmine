@@ -21,7 +21,7 @@ public class ExampleModClient implements ClientModInitializer {
 		// Keybind to open the settings GUI (default Page Down, changeable in Controls).
 		guiKey = KeyMappingHelper.registerKeyMapping(new KeyMapping(
 			"key.fastmine.gui",
-			InputConstants.Type.KEYSYM,
+			InputConstants.Type.KEYBOARD,
 			InputConstants.KEY_PAGEDOWN,
 			KeyMapping.Category.MISC
 		));
@@ -30,13 +30,13 @@ public class ExampleModClient implements ClientModInitializer {
 		// immediately closed by the chat screen that sent the command.
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (guiKey.consumeClick()) {
-				if (client.screen == null) {
-					client.setScreen(new FastMineScreen());
+				if (client.gui.screen() == null) {
+					client.gui.setScreen(new FastMineScreen());
 				}
 			}
 			if (FastMineState.openGui) {
 				FastMineState.openGui = false;
-				client.setScreen(new FastMineScreen());
+				client.gui.setScreen(new FastMineScreen());
 			}
 		});
 	}
